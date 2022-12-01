@@ -2,9 +2,9 @@
 
 namespace remproject.Admin;
 
-public class remprojectApplicationAutoMapperProfile : Profile
+public class remprojectAdminApplicationAutoMapperProfile : Profile
 {
-    public remprojectApplicationAutoMapperProfile()
+    public remprojectAdminApplicationAutoMapperProfile()
     {
         /* You can configure your AutoMapper mapping configuration here.
          * Alternatively, you can split your mapping configurations

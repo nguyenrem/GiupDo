@@ -37,12 +37,12 @@ namespace remproject.Admin;
     typeof(AbpCachingStackExchangeRedisModule),
     typeof(AbpDistributedLockingModule),
     typeof(AbpAspNetCoreMvcUiMultiTenancyModule),
-    typeof(remprojectApplicationModule),
+    typeof(remprojectAdminApplicationModule),
     typeof(remprojectEntityFrameworkCoreModule),
     typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpSwashbuckleModule)
 )]
-public class remprojectHttpApiHostModule : AbpModule
+public class remprojectAdminHttpApiHostModule : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
@@ -81,10 +81,10 @@ public class remprojectHttpApiHostModule : AbpModule
                         $"..{Path.DirectorySeparatorChar}remproject.Domain"));
                 options.FileSets.ReplaceEmbeddedByPhysical<remprojectApplicationContractsModule>(
                     Path.Combine(hostingEnvironment.ContentRootPath,
-                        $"..{Path.DirectorySeparatorChar}remproject.Application.Contracts"));
-                options.FileSets.ReplaceEmbeddedByPhysical<remprojectApplicationModule>(
+                        $"..{Path.DirectorySeparatorChar}remproject.Admin.Application.Contracts"));
+                options.FileSets.ReplaceEmbeddedByPhysical<remprojectAdminApplicationModule>(
                     Path.Combine(hostingEnvironment.ContentRootPath,
-                        $"..{Path.DirectorySeparatorChar}remproject.Application"));
+                        $"..{Path.DirectorySeparatorChar}remproject.Admin.Application"));
             });
         }
     }
@@ -93,7 +93,7 @@ public class remprojectHttpApiHostModule : AbpModule
     {
         Configure<AbpAspNetCoreMvcOptions>(options =>
         {
-            options.ConventionalControllers.Create(typeof(remprojectApplicationModule).Assembly);
+            options.ConventionalControllers.Create(typeof(remprojectAdminApplicationModule).Assembly);
         });
     }
 
@@ -104,7 +104,7 @@ public class remprojectHttpApiHostModule : AbpModule
             {
                 options.Authority = configuration["AuthServer:Authority"];
                 options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
-                options.Audience = "remproject";
+                options.Audience = "remproject.Admin";
             });
     }
 
@@ -114,11 +114,11 @@ public class remprojectHttpApiHostModule : AbpModule
             configuration["AuthServer:Authority"],
             new Dictionary<string, string>
             {
-                    {"remproject", "remproject API"}
+                    {"remproject.Admin", "remproject Admin API"}
             },
             options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "remproject API", Version = "v1" });
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "remproject Admin API", Version = "v1" });
                 options.DocInclusionPredicate((docName, description) => true);
                 options.CustomSchemaIds(type => type.FullName);
             });
@@ -156,7 +156,7 @@ public class remprojectHttpApiHostModule : AbpModule
         IConfiguration configuration,
         IWebHostEnvironment hostingEnvironment)
     {
-        var dataProtectionBuilder = context.Services.AddDataProtection().SetApplicationName("remproject");
+        var dataProtectionBuilder = context.Services.AddDataProtection().SetApplicationName("remproject.Admin");
         if (!hostingEnvironment.IsDevelopment())
         {
             var redis = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]);
@@ -225,7 +225,7 @@ public class remprojectHttpApiHostModule : AbpModule
         app.UseSwagger();
         app.UseAbpSwaggerUI(options =>
         {
-            options.SwaggerEndpoint("/swagger/v1/swagger.json", "remproject API");
+            options.SwaggerEndpoint("/swagger/v1/swagger.json", "remproject Admin API");
 
             var configuration = context.GetConfiguration();
             options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);

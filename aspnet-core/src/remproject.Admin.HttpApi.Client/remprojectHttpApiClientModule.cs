@@ -19,7 +19,7 @@ namespace remproject.Admin;
     typeof(AbpFeatureManagementHttpApiClientModule),
     typeof(AbpSettingManagementHttpApiClientModule)
 )]
-public class remprojectHttpApiClientModule : AbpModule
+public class remprojectAdminHttpApiClientModule : AbpModule
 {
     public const string RemoteServiceName = "Default";
 
@@ -32,7 +32,7 @@ public class remprojectHttpApiClientModule : AbpModule
 
         Configure<AbpVirtualFileSystemOptions>(options =>
         {
-            options.FileSets.AddEmbedded<remprojectHttpApiClientModule>();
+            options.FileSets.AddEmbedded<remprojectAdminHttpApiClientModule>();
         });
     }
 }

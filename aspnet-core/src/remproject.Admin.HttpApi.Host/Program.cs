@@ -27,12 +27,12 @@ public class Program
 
         try
         {
-            Log.Information("Starting remproject.HttpApi.Host.");
+            Log.Information("Starting remproject.Admin.HttpApi.Host.");
             var builder = WebApplication.CreateBuilder(args);
             builder.Host.AddAppSettingsSecretsJson()
                 .UseAutofac()
                 .UseSerilog();
-            await builder.AddApplicationAsync<remprojectHttpApiHostModule>();
+            await builder.AddApplicationAsync<remprojectAdminHttpApiHostModule>();
             var app = builder.Build();
             await app.InitializeApplicationAsync();
             await app.RunAsync();

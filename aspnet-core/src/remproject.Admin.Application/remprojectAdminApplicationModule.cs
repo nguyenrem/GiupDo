@@ -19,13 +19,13 @@ namespace remproject.Admin;
     typeof(AbpFeatureManagementApplicationModule),
     typeof(AbpSettingManagementApplicationModule)
     )]
-public class remprojectApplicationModule : AbpModule
+public class remprojectAdminApplicationModule : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         Configure<AbpAutoMapperOptions>(options =>
         {
-            options.AddMaps<remprojectApplicationModule>();
+            options.AddMaps<remprojectAdminApplicationModule>();
         });
     }
 }

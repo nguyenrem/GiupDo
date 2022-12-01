@@ -1,9 +1,10 @@
-﻿using Volo.Abp.Modularity;
+﻿using remproject.Admin;
+using Volo.Abp.Modularity;
 
-namespace remproject;
+namespace remproject.Admin;
 
 [DependsOn(
-    typeof(remprojectApplicationModule),
+    typeof(remprojectAdminApplicationModule),
     typeof(remprojectDomainTestModule)
     )]
 public class remprojectApplicationTestModule : AbpModule

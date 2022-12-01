@@ -8,9 +8,9 @@ namespace remproject.Admin;
 
 /* Inherit your application services from this class.
  */
-public abstract class remprojectAppService : ApplicationService
+public abstract class remprojectAdminAppService : ApplicationService
 {
-    protected remprojectAppService()
+    protected remprojectAdminAppService()
     {
         LocalizationResource = typeof(remprojectResource);
     }

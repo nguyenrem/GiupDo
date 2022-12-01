@@ -1,16 +1,17 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
+using remproject.Admin;
 using Volo.Abp.Autofac;
 using Volo.Abp.Http.Client;
 using Volo.Abp.Http.Client.IdentityModel;
 using Volo.Abp.Modularity;
 
-namespace remproject.HttpApi.Client.ConsoleTestApp;
+namespace remproject.Admin.HttpApi.Client.ConsoleTestApp;
 
 [DependsOn(
     typeof(AbpAutofacModule),
-    typeof(remprojectHttpApiClientModule),
+    typeof(remprojectAdminHttpApiClientModule),
     typeof(AbpHttpClientIdentityModelModule)
     )]
 public class remprojectConsoleApiClientModule : AbpModule
