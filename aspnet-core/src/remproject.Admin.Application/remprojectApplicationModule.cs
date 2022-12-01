@@ -7,7 +7,7 @@ using Volo.Abp.PermissionManagement;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.TenantManagement;
 
-namespace remproject;
+namespace remproject.Admin;
 
 [DependsOn(
     typeof(remprojectDomainModule),

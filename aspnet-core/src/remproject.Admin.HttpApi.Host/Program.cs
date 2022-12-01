@@ -6,7 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 
-namespace remproject;
+namespace remproject.Admin;
 
 public class Program
 {

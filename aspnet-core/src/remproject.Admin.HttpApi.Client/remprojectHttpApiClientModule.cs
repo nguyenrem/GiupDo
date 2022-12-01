@@ -8,7 +8,7 @@ using Volo.Abp.TenantManagement;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.VirtualFileSystem;
 
-namespace remproject;
+namespace remproject.Admin;
 
 [DependsOn(
     typeof(remprojectApplicationContractsModule),

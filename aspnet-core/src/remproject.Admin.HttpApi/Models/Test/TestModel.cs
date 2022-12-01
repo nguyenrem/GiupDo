@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace remproject.Models.Test;
+namespace remproject.Admin.Models.Test;
 
 public class TestModel
 {

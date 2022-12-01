@@ -4,11 +4,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>remproject</RootNamespace>
+    <RootNamespace>remproject.Admin</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\remproject.Application.Contracts\remproject.Application.Contracts.csproj" />
+    <ProjectReference Include="..\remproject.Admin.Application.Contracts\remproject.Admin.Application.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,7 +1,7 @@
 ﻿using remproject.Localization;
 using Volo.Abp.AspNetCore.Mvc;
 
-namespace remproject.Controllers;
+namespace remproject.Admin.Controllers;
 
 /* Inherit your controllers from this class.
  */

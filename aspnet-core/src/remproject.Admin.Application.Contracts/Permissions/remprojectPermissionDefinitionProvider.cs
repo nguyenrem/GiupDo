@@ -2,7 +2,7 @@
 using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Localization;
 
-namespace remproject.Permissions;
+namespace remproject.Admin.Permissions;
 
 public class remprojectPermissionDefinitionProvider : PermissionDefinitionProvider
 {

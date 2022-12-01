@@ -2,7 +2,7 @@
 using Volo.Abp.ObjectExtending;
 using Volo.Abp.Threading;
 
-namespace remproject;
+namespace remproject.Admin;
 
 public static class remprojectDtoExtensions
 {

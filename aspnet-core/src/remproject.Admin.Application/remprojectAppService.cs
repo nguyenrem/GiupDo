@@ -4,7 +4,7 @@ using System.Text;
 using remproject.Localization;
 using Volo.Abp.Application.Services;
 
-namespace remproject;
+namespace remproject.Admin;
 
 /* Inherit your application services from this class.
  */

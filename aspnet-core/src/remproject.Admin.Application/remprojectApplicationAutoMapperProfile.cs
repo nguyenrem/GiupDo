@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace remproject;
+namespace remproject.Admin;
 
 public class remprojectApplicationAutoMapperProfile : Profile
 {

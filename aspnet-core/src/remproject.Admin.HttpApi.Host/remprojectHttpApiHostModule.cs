@@ -29,7 +29,7 @@ using Volo.Abp.Modularity;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.VirtualFileSystem;
 
-namespace remproject;
+namespace remproject.Admin;
 
 [DependsOn(
     typeof(remprojectHttpApiModule),

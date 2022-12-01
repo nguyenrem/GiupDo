@@ -1,4 +1,4 @@
-﻿namespace remproject.Permissions;
+﻿namespace remproject.Admin.Permissions;
 
 public static class remprojectPermissions
 {
