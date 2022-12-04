@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Entities.Auditing;
 
-namespace remproject.Manufactures
+namespace remproject.Manufacturers
 {
     public class Manufacturer : CreationAuditedAggregateRoot<Guid>
     {
