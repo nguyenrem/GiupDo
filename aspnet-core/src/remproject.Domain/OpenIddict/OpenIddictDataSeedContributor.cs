@@ -67,7 +67,7 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
             await _scopeManager.CreateAsync(new OpenIddictScopeDescriptor
             {
                 Name = "remproject.Admin",
-                DisplayName = "remproject.Admin API",
+                DisplayName = "remproject Admin API",
                 Resources =
                 {
                     "remproject.Admin"
