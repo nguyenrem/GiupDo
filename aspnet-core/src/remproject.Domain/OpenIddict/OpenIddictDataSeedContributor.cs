@@ -91,16 +91,16 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
         var configurationSection = _configuration.GetSection("OpenIddict:Applications");
 
         //Admin Client
-        var webAdminClientId = configurationSection["TeduEcommerce_Admin:ClientId"];
+        var webAdminClientId = configurationSection["remproject_Admin:ClientId"];
         if (!webAdminClientId.IsNullOrWhiteSpace())
         {
-            var adminWebClientRootUrl = configurationSection["TeduEcommerce_Admin:RootUrl"].EnsureEndsWith('/');
+            var adminWebClientRootUrl = configurationSection["remproject_Admin:RootUrl"].EnsureEndsWith('/');
             await CreateApplicationAsync(
                 name: webAdminClientId,
                 type: OpenIddictConstants.ClientTypes.Confidential,
                 consentType: OpenIddictConstants.ConsentTypes.Implicit,
                 displayName: "Admin Application",
-                secret: configurationSection["TeduEcommerce_Admin:ClientSecret"] ?? "1q2w3e*",
+                secret: configurationSection["remproject_Admin:ClientSecret"] ?? "1q2w3e*",
                 grantTypes: new List<string> //Hybrid flow
                 {
                     OpenIddictConstants.GrantTypes.Password,
@@ -115,19 +115,19 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
         }
 
         //Web Client
-        var webClientId = configurationSection["TeduEcommerce_Web:ClientId"];
+        var webClientId = configurationSection["remproject_Web:ClientId"];
         if (!webClientId.IsNullOrWhiteSpace())
         {
-            var webClientRootUrl = configurationSection["TeduEcommerce_Web:RootUrl"].EnsureEndsWith('/');
+            var webClientRootUrl = configurationSection["remproject_Web:RootUrl"].EnsureEndsWith('/');
 
-            /* TeduEcommerce_Web client is only needed if you created a tiered
+            /* remproject_Web client is only needed if you created a tiered
              * solution. Otherwise, you can delete this client. */
             await CreateApplicationAsync(
                 name: webClientId,
                 type: OpenIddictConstants.ClientTypes.Confidential,
                 consentType: OpenIddictConstants.ConsentTypes.Implicit,
                 displayName: "Web Application",
-                secret: configurationSection["TeduEcommerce_Web:ClientSecret"] ?? "1q2w3e*",
+                secret: configurationSection["remproject_Web:ClientSecret"] ?? "1q2w3e*",
                 grantTypes: new List<string> //Hybrid flow
                 {
                     OpenIddictConstants.GrantTypes.AuthorizationCode,
