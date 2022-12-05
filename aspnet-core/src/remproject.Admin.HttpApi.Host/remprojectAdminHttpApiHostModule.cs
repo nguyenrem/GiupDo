@@ -229,7 +229,7 @@ public class remprojectAdminHttpApiHostModule : AbpModule
 
             var configuration = context.GetConfiguration();
             options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
-            options.OAuthScopes("remproject");
+            options.OAuthScopes("remproject.Admin");
         });
 
         app.UseAuditing();

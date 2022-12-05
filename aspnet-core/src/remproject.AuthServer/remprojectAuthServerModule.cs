@@ -56,7 +56,7 @@ public class remprojectAuthServerModule : AbpModule
         {
             builder.AddValidation(options =>
             {
-                options.AddAudiences("remproject");
+                options.AddAudiences("remproject" , "remproject.Admin");
                 options.UseLocalServer();
                 options.UseAspNetCore();
             });
