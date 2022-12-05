@@ -6,21 +6,21 @@ export const environment = {
   production: true,
   application: {
     baseUrl,
-    name: 'remproject',
+    name: 'remproject Admin',
     logoUrl: '',
   },
   oAuthConfig: {
-    issuer: 'https://localhost:44352/',
+    issuer: 'https://localhost:5000/',
     redirectUri: baseUrl,
-    clientId: 'remproject_App',
+    clientId: 'remproject_Admin',
     responseType: 'code',
-    scope: 'offline_access remproject',
+    scope: 'offline_access remproject.Admin',
     requireHttps: true
   },
   apis: {
     default: {
-      url: 'https://localhost:44356',
-      rootNamespace: 'remproject',
+      url: 'https://localhost:5001',
+      rootNamespace: 'remproject.Admin',
     },
   },
 } as Environment;
