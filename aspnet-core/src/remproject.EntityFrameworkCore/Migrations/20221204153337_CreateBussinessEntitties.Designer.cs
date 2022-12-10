@@ -495,7 +495,7 @@ namespace remproject.Migrations
                     b.Property<int>("SortOrder")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Visiability")
+                    b.Property<bool>("visibility")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");

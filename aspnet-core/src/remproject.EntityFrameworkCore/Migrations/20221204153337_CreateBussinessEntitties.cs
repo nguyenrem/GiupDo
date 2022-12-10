@@ -260,7 +260,7 @@ namespace remproject.Migrations
                     Slug = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     SortOrder = table.Column<int>(type: "int", nullable: false),
                     CoverPicture = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
-                    Visiability = table.Column<bool>(type: "bit", nullable: false),
+                    visibility = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     SeoMetaDescription = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
