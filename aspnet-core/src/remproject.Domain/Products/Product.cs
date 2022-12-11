@@ -8,7 +8,7 @@ using Volo.Abp.Domain.Entities.Auditing;
 
 namespace remproject.Products
 {
-    public class Product :AuditedAggregateRoot<Guid>
+    public class Product : AuditedAggregateRoot<Guid>
     {
         public Guid ManufacturerId { get; set; }
         public string Name { get; set; }
@@ -23,7 +23,7 @@ namespace remproject.Products
         public string SeoMetaDescription { get; set; }
         public string Description { get; set; }
         public string ThumbnailPicture { get; set; }
-
+        public double SellPrice { get; set; }
 
     }
 }
