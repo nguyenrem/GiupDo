@@ -1,6 +1,6 @@
-﻿using System;
+﻿using remproject.ProductCategories;
+using System;
 using System.Threading.Tasks;
-using remproject.ProductCategories;
 using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
@@ -11,7 +11,7 @@ namespace remproject.Products
     {
         private readonly IRepository<Product, Guid> _productRepository;
         private readonly IRepository<ProductCategory, Guid> _productCategoryRepository;
-        public ProductManager(IRepository<Product,Guid> productRepository,
+        public ProductManager(IRepository<Product, Guid> productRepository,
              IRepository<ProductCategory, Guid> productCategoryRepository)
         {
             _productCategoryRepository = productCategoryRepository;
@@ -23,8 +23,7 @@ namespace remproject.Products
             ProductType productType, string sKU,
             int sortOrder, bool visibility,
             bool isActive, Guid categoryId,
-            string seoMetaDescription, string description,
-            string thumbnailPicture, double sellPrice)
+            string seoMetaDescription, string description, double sellPrice)
         {
             if (await _productRepository.AnyAsync(x => x.Name == name))
                 throw new UserFriendlyException("Tên sản phẩm đã tồn tại", remprojectDomainErrorCodes.ProductNameAlreadyExists);
@@ -33,10 +32,10 @@ namespace remproject.Products
             if (await _productRepository.AnyAsync(x => x.SKU == sKU))
                 throw new UserFriendlyException("Mã SKU sản phẩm đã tồn tại", remprojectDomainErrorCodes.ProductSKUAlreadyExists);
 
-            var category =  await _productCategoryRepository.GetAsync(categoryId);
+            var category = await _productCategoryRepository.GetAsync(categoryId);
 
-            return new Product(Guid.NewGuid(),manufacturerId,name,code,slug,productType,sKU,sortOrder,
-                visibility,isActive,categoryId,seoMetaDescription,description,thumbnailPicture,sellPrice, category?.Name,category?.Slug);
+            return new Product(Guid.NewGuid(), manufacturerId, name, code, slug, productType, sKU, sortOrder,
+                visibility, isActive, categoryId, seoMetaDescription, description, null, sellPrice, category?.Name, category?.Slug);
         }
     }
 }
