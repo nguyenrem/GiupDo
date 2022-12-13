@@ -1,14 +1,16 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using remproject.Manufacturers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using remproject.Manufacturers;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace remproject.Admin.Manufacturers
 {
+    [Authorize]
     public class ManufacturersAppService : CrudAppService<
         Manufacturer,
         ManufacturerDto,
@@ -31,7 +33,7 @@ namespace remproject.Admin.Manufacturers
         public async Task<List<ManufacturerInListDto>> GetListAllAsync()
         {
             var query = await Repository.GetQueryableAsync();
-            query = query.Where(x=>x.IsActive == true);
+            query = query.Where(x => x.IsActive == true);
             var data = await AsyncExecuter.ToListAsync(query);
 
             return ObjectMapper.Map<List<Manufacturer>, List<ManufacturerInListDto>>(data);
@@ -46,7 +48,7 @@ namespace remproject.Admin.Manufacturers
             var totalCount = await AsyncExecuter.LongCountAsync(query);
             var data = await AsyncExecuter.ToListAsync(query.Skip(input.SkipCount).Take(input.MaxResultCount));
 
-            return new PagedResultDto<ManufacturerInListDto>(totalCount,ObjectMapper.Map<List<Manufacturer>,List<ManufacturerInListDto>>(data));
+            return new PagedResultDto<ManufacturerInListDto>(totalCount, ObjectMapper.Map<List<Manufacturer>, List<ManufacturerInListDto>>(data));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using remproject.ProductCategories;
+﻿using Microsoft.AspNetCore.Authorization;
+using remproject.ProductCategories;
 using remproject.Products;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace remproject.Admin.Products
 {
+    [Authorize]
     public class ProductsAppService : CrudAppService<
         Product,
         ProductDto,
@@ -36,8 +38,20 @@ namespace remproject.Admin.Products
 
         public override async Task<ProductDto> CreateAsync(CreateUpdateProductDto input)
         {
-            var product = await _productManager.CreateAsync(input.ManufacturerId, input.Name, input.Code, input.Slug, input.ProductType, input.SKU,
-                input.SortOrder, input.Visibility, input.IsActive, input.CategoryId, input.SeoMetaDescription, input.Description, input.SellPrice);
+            var product = await _productManager.CreateAsync(
+                input.ManufacturerId,
+                input.Name,
+                input.Code,
+                input.Slug,
+                input.ProductType,
+                input.SKU,
+                input.SortOrder,
+                input.Visibility,
+                input.IsActive,
+                input.CategoryId,
+                input.SeoMetaDescription,
+                input.Description,
+                input.SellPrice);
 
             if (input.ThumbnailPictureContent != null && input.ThumbnailPictureContent.Length > 0)
             {

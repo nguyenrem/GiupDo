@@ -1,4 +1,5 @@
-﻿using remproject.ProductCategories;
+﻿using Microsoft.AspNetCore.Authorization;
+using remproject.ProductCategories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace remproject.Admin.ProductCategories
 {
+    [Authorize]
     public class ProductCategoriesAppService : CrudAppService<
         ProductCategory,
         ProductCategoryDto,
