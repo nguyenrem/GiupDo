@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using remproject.Admin.Manufacturers;
+using remproject.Admin.ProductAttributes;
 using remproject.Admin.ProductCategories;
 using remproject.Admin.Products;
 using remproject.Manufacturers;
+using remproject.ProductAttributes;
 using remproject.ProductCategories;
 using remproject.Products;
 
@@ -12,10 +14,6 @@ public class remprojectAdminApplicationAutoMapperProfile : Profile
 {
     public remprojectAdminApplicationAutoMapperProfile()
     {
-        /* You can configure your AutoMapper mapping configuration here.
-         * Alternatively, you can split your mapping configurations
-         * into multiple profile classes for a better organization. */
-
         //Product Category
         CreateMap<ProductCategory, ProductCategoryDto>();
         CreateMap<ProductCategory, ProductCategoryInListDto>();
@@ -26,9 +24,13 @@ public class remprojectAdminApplicationAutoMapperProfile : Profile
         CreateMap<Product, ProductInListDto>();
         CreateMap<CreateUpdateProductDto, Product>();
 
-        //Manufacturer
         CreateMap<Manufacturer, ManufacturerDto>();
         CreateMap<Manufacturer, ManufacturerInListDto>();
         CreateMap<CreateUpdateManufacturerDto, Manufacturer>();
+
+        //Product attribute
+        CreateMap<ProductAttribute, ProductAttributeDto>();
+        CreateMap<ProductAttribute, ProductAttributeInListDto>();
+        CreateMap<CreateUpdateProductAttributeDto, ProductAttribute>();
     }
 }
