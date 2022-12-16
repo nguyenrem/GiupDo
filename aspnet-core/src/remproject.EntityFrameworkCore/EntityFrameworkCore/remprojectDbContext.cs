@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using remproject.IdentitySettings;
 using remproject.Inventories;
 using remproject.InventoryTickets;
 using remproject.Manufacturers;
@@ -58,7 +59,7 @@ public class remprojectDbContext :
     public DbSet<Tenant> Tenants { get; set; }
     public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; }
 
-    //remProject
+    //Ecommerce
     public DbSet<ProductAttribute> ProductAttributes { get; set; }
     public DbSet<Inventory> Inventories { get; set; }
     public DbSet<InventoryTicket> InventoryTickets { get; set; }
@@ -85,6 +86,9 @@ public class remprojectDbContext :
     public DbSet<PromotionProduct> PromotionProducts { get; set; }
     public DbSet<PromotionUsageHistory> PromotionUsageHistories { get; set; }
 
+    public DbSet<IdentitySetting> IdentitySettings { get; set; }
+
+
     #endregion
 
     public remprojectDbContext(DbContextOptions<remprojectDbContext> options)
@@ -109,7 +113,6 @@ public class remprojectDbContext :
         builder.ConfigureTenantManagement();
 
         /* Configure your own tables/entities inside here */
-
         builder.ApplyConfiguration(new ProductAttributeConfiguration());
 
         builder.ApplyConfiguration(new InventoryConfiguration());
@@ -141,12 +144,7 @@ public class remprojectDbContext :
         builder.ApplyConfiguration(new PromotionManufacturerConfiguration());
         builder.ApplyConfiguration(new PromotionProductConfiguration());
         builder.ApplyConfiguration(new PromotionUsageHistoryConfiguration());
+        builder.ApplyConfiguration(new IdentitySettingConfiguration());
 
-        //builder.Entity<YourEntity>(b =>
-        //{
-        //    b.ToTable(remprojectConsts.DbTablePrefix + "YourEntities", remprojectConsts.DbSchema);
-        //    b.ConfigureByConvention(); //auto configure for the base class props
-        //    //...
-        //});
     }
 }
