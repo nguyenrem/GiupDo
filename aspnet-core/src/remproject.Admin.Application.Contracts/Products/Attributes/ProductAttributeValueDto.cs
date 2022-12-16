@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using remproject.ProductAttributes;
+﻿using remproject.ProductAttributes;
+using System;
 using Volo.Abp.Application.Dtos;
 
 namespace remproject.Admin.Products.Attributes
@@ -24,8 +22,8 @@ namespace remproject.Admin.Products.Attributes
         public Guid? DateTimeId { get; set; }
         public Guid? DecimalId { get; set; }
         public Guid? IntId { get; set; }
-        public Guid TextId { get; set; }
-        public Guid VarcharId { get; set; }
+        public Guid? TextId { get; set; }
+        public Guid? VarcharId { get; set; }
 
     }
 }
