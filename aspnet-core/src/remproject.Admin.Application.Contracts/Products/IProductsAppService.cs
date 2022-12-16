@@ -1,4 +1,5 @@
-﻿using System;
+﻿using remproject.Admin.Products.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
@@ -19,5 +20,14 @@ namespace remproject.Admin.Products
 
         Task<string> GetThumbnailImageAsync(string fileName);
         Task<string> GetSuggestNewCodeAsync();
+
+        Task<ProductAttributeValueDto> AddProductAttributeAsync(AddUpdateProductAttributeDto input);
+        Task<ProductAttributeValueDto> UpdateProductAttributeAsync(Guid id, AddUpdateProductAttributeDto input);
+
+        Task RemoveProductAttributeAsync(Guid attributeId, Guid id);
+
+        Task<List<ProductAttributeValueDto>> GetListProductAttributeAllAsync(Guid productId);
+        Task<PagedResultDto<ProductAttributeValueDto>> GetListProductAttributesAsync(ProductAttributeListFilterDto input);
+
     }
 }

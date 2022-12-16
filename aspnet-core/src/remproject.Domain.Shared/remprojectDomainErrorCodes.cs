@@ -8,5 +8,8 @@ public static class remprojectDomainErrorCodes
 
     public const string ProductSKUAlreadyExists = "remproject:ProductSKUAlreadyExists";
     public const string ProductIsNotExists = "remproject:ProductIsNotExists";
+    public const string ProductAttributeIdIsNotExists = "remproject:ProductAttributeIdIsNotExists";
+
+    public const string ProductAttributeValueIsNotValid = "remproject:ProductAttributeValueIsNotValid";
 
 }
