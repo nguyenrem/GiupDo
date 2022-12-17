@@ -12,4 +12,6 @@ public static class remprojectDomainErrorCodes
 
     public const string ProductAttributeValueIsNotValid = "remproject:ProductAttributeValueIsNotValid";
 
+    public const string RoleNameAlreadyExists = "remproject:RoleNameAlreadyExists";
+
 }
