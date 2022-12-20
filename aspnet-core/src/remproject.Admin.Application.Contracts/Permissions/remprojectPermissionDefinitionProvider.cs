@@ -9,7 +9,7 @@ public class remprojectPermissionDefinitionProvider : PermissionDefinitionProvid
     public override void Define(IPermissionDefinitionContext context)
     {
         //Catalog
-        var catalogGroup = context.AddGroup(remprojectPermissions.CatalogGroupName);
+        var catalogGroup = context.AddGroup(remprojectPermissions.CatalogGroupName, L("Permission:Catalog"));
 
         //Add product
         var productPermission = catalogGroup.AddPermission(remprojectPermissions.Product.Default, L("Permission:Catalog.Product"));
