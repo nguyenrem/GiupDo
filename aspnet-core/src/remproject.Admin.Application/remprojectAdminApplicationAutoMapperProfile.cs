@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
-using remproject.Admin.Manufacturers;
-using remproject.Admin.ProductAttributes;
-using remproject.Admin.ProductCategories;
-using remproject.Admin.Products;
-using remproject.Admin.Roles;
+using remproject.Admin.Catalog.Manufacturers;
+using remproject.Admin.Catalog.ProductAttributes;
+using remproject.Admin.Catalog.ProductCategories;
+using remproject.Admin.Catalog.Products;
+using remproject.Admin.System.Roles;
+using remproject.Admin.System.Users;
 using remproject.Manufacturers;
 using remproject.ProductAttributes;
 using remproject.ProductCategories;
@@ -50,5 +51,9 @@ public class remprojectAdminApplicationAutoMapperProfile : Profile
             :
             null));
         CreateMap<CreateUpdateRoleDto, IdentityRole>();
+
+        //User
+        CreateMap<IdentityUser, UserDto>();
+        CreateMap<IdentityUser, UserInListDto>();
     }
 }
