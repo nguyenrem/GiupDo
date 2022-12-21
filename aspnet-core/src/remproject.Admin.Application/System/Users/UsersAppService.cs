@@ -1,9 +1,8 @@
-﻿using System;
+﻿using remproject.Admin.System.Users;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using remproject.Admin.System.Users;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -44,7 +43,7 @@ namespace remproject.Admin.Users
             return ObjectMapper.Map<List<IdentityUser>, List<UserInListDto>>(data);
         }
 
-        public  async Task<PagedResultDto<UserInListDto>> GetListWithFilterAsync(BaseListFilterDto input)
+        public async Task<PagedResultDto<UserInListDto>> GetListWithFilterAsync(BaseListFilterDto input)
         {
             var query = await Repository.GetQueryableAsync();
 
@@ -61,7 +60,7 @@ namespace remproject.Admin.Users
 
             query = query.Skip(input.SkipCount).Take(input.MaxResultCount);
             var data = await AsyncExecuter.ToListAsync(query);
-            var users = ObjectMapper.Map<List<IdentityUser>, List<UserInListDto>> (data);
+            var users = ObjectMapper.Map<List<IdentityUser>, List<UserInListDto>>(data);
             return new PagedResultDto<UserInListDto>(totalCount, users);
         }
 
@@ -115,7 +114,7 @@ namespace remproject.Admin.Users
             var result = await _identityUserManager.UpdateAsync(user);
             if (result.Succeeded)
             {
-                 return ObjectMapper.Map<IdentityUser, UserDto>(user);
+                return ObjectMapper.Map<IdentityUser, UserDto>(user);
             }
             else
             {
@@ -138,9 +137,38 @@ namespace remproject.Admin.Users
                 throw new EntityNotFoundException(typeof(IdentityUser), id);
             }
             var userDto = ObjectMapper.Map<IdentityUser, UserDto>(user);
+
+            //Get roles from users
             var roles = await _identityUserManager.GetRolesAsync(user);
             userDto.Roles = roles;
             return userDto;
+        }
+
+        public async Task AssignRolesAsync(Guid userId, string[] roleNames)
+        {
+            var user = await _identityUserManager.FindByIdAsync(userId.ToString());
+            if (user == null)
+            {
+                throw new EntityNotFoundException(typeof(IdentityUser), userId);
+            }
+            var currentRoles = await _identityUserManager.GetRolesAsync(user);
+            var removedResult = await _identityUserManager.RemoveFromRolesAsync(user, currentRoles);
+            var addedResult = await _identityUserManager.AddToRolesAsync(user, roleNames);
+            if (!addedResult.Succeeded || !removedResult.Succeeded)
+            {
+                List<Microsoft.AspNetCore.Identity.IdentityError> addedErrorList = addedResult.Errors.ToList();
+                List<Microsoft.AspNetCore.Identity.IdentityError> removedErrorList = removedResult.Errors.ToList();
+                var errorList = new List<Microsoft.AspNetCore.Identity.IdentityError>();
+                errorList.AddRange(addedErrorList);
+                errorList.AddRange(removedErrorList);
+                string errors = "";
+
+                foreach (var error in errorList)
+                {
+                    errors = errors + error.Description.ToString();
+                }
+                throw new UserFriendlyException(errors);
+            }
         }
     }
 }
