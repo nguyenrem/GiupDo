@@ -31,6 +31,8 @@ using Volo.Abp.VirtualFileSystem;
 using Microsoft.IdentityModel.Tokens;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace remproject.Admin;
 
@@ -47,6 +49,13 @@ namespace remproject.Admin;
 )]
 public class remprojectAdminHttpApiHostModule : AbpModule
 {
+    public override void PreConfigureServices(ServiceConfigurationContext context)
+    {
+        PreConfigure<IdentityBuilder>(builder =>
+        {
+            builder.AddDefaultTokenProviders();
+        });
+    }
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         var configuration = context.Services.GetConfiguration();
