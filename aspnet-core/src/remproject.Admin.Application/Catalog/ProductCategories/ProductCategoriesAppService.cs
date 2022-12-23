@@ -1,16 +1,18 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using remproject.ProductCategories;
+using remproject.Admin.Catalog.ProductCategories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using remproject.Admin.Permissions;
+using remproject.ProductCategories;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
-namespace remproject.Admin.Catalog.ProductCategories
+namespace remproject.Admin.ProductCategories
 {
-    [Authorize]
+    [Authorize(remprojectPermissions.ProductCategory.Default, Policy = "AdminOnly")]
     public class ProductCategoriesAppService : CrudAppService<
         ProductCategory,
         ProductCategoryDto,
@@ -22,13 +24,22 @@ namespace remproject.Admin.Catalog.ProductCategories
         public ProductCategoriesAppService(IRepository<ProductCategory, Guid> repository)
             : base(repository)
         {
+            GetPolicyName = remprojectPermissions.ProductCategory.Default;
+            GetListPolicyName = remprojectPermissions.ProductCategory.Default;
+            CreatePolicyName = remprojectPermissions.ProductCategory.Create;
+            UpdatePolicyName = remprojectPermissions.ProductCategory.Update;
+            DeletePolicyName = remprojectPermissions.ProductCategory.Delete;
         }
+
+        [Authorize(remprojectPermissions.ProductCategory.Delete)]
 
         public async Task DeleteMultipleAsync(IEnumerable<Guid> ids)
         {
             await Repository.DeleteManyAsync(ids);
             await UnitOfWorkManager.Current.SaveChangesAsync();
         }
+
+        [Authorize(remprojectPermissions.ProductCategory.Default)]
 
         public async Task<List<ProductCategoryInListDto>> GetListAllAsync()
         {
@@ -39,6 +50,8 @@ namespace remproject.Admin.Catalog.ProductCategories
             return ObjectMapper.Map<List<ProductCategory>, List<ProductCategoryInListDto>>(data);
 
         }
+
+        [Authorize(remprojectPermissions.ProductCategory.Default)]
 
         public async Task<PagedResultDto<ProductCategoryInListDto>> GetListFilterAsync(BaseListFilterDto input)
         {

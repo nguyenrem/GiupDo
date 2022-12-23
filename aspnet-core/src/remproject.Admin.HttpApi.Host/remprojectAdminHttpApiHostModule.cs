@@ -33,7 +33,6 @@ using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Identity;
 
-
 namespace remproject.Admin;
 
 [DependsOn(
@@ -56,6 +55,7 @@ public class remprojectAdminHttpApiHostModule : AbpModule
             builder.AddDefaultTokenProviders();
         });
     }
+
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         var configuration = context.Services.GetConfiguration();
@@ -124,6 +124,10 @@ public class remprojectAdminHttpApiHostModule : AbpModule
                     ValidateIssuer = false,
                 };
             });
+        context.Services.AddAuthorization(options =>
+        {
+            options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+        });
     }
 
     private static void ConfigureSwaggerServices(ServiceConfigurationContext context, IConfiguration configuration)

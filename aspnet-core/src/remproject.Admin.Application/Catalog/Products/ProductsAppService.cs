@@ -1,22 +1,24 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using remproject.Admin.Catalog.Products.Attributes;
+using remproject.Admin.Catalog.Products;
 using remproject.ProductAttributes;
-using remproject.ProductCategories;
 using remproject.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using remproject.Admin.Permissions;
+using remproject.ProductCategories;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.BlobStoring;
 using Volo.Abp.Domain.Repositories;
 
-namespace remproject.Admin.Catalog.Products
+namespace remproject.Admin.Products
 {
-    [Authorize]
+    [Authorize(remprojectPermissions.Product.Default, Policy = "AdminOnly")]
     public class ProductsAppService : CrudAppService<
         Product,
         ProductDto,
@@ -61,8 +63,15 @@ namespace remproject.Admin.Catalog.Products
             _productAttributeDecimalRepository = productAttributeDecimalRepository;
             _productAttributeVarcharRepository = productAttributeVarcharRepository;
             _productAttributeTextRepository = productAttributeTextRepository;
+
+            GetPolicyName = remprojectPermissions.Product.Default;
+            GetListPolicyName = remprojectPermissions.Product.Default;
+            CreatePolicyName = remprojectPermissions.Product.Create;
+            UpdatePolicyName = remprojectPermissions.Product.Update;
+            DeletePolicyName = remprojectPermissions.Product.Delete;
         }
 
+        [Authorize(remprojectPermissions.Product.Update)]
         public override async Task<ProductDto> CreateAsync(CreateUpdateProductDto input)
         {
             var product = await _productManager.CreateAsync(
@@ -90,6 +99,8 @@ namespace remproject.Admin.Catalog.Products
 
             return ObjectMapper.Map<Product, ProductDto>(result);
         }
+
+        [Authorize(remprojectPermissions.Product.Update)]
 
         public override async Task<ProductDto> UpdateAsync(Guid id, CreateUpdateProductDto input)
         {
@@ -128,11 +139,15 @@ namespace remproject.Admin.Catalog.Products
             return ObjectMapper.Map<Product, ProductDto>(product);
         }
 
+        [Authorize(remprojectPermissions.Product.Delete)]
+
         public async Task DeleteMultipleAsync(IEnumerable<Guid> ids)
         {
             await Repository.DeleteManyAsync(ids);
             await UnitOfWorkManager.Current.SaveChangesAsync();
         }
+
+        [Authorize(remprojectPermissions.Product.Default)]
 
         public async Task<List<ProductInListDto>> GetListAllAsync()
         {
@@ -142,6 +157,8 @@ namespace remproject.Admin.Catalog.Products
 
             return ObjectMapper.Map<List<Product>, List<ProductInListDto>>(data);
         }
+
+        [Authorize(remprojectPermissions.Product.Default)]
 
         public async Task<PagedResultDto<ProductInListDto>> GetListFilterAsync(ProductListFilterDto input)
         {
@@ -159,6 +176,8 @@ namespace remproject.Admin.Catalog.Products
             return new PagedResultDto<ProductInListDto>(totalCount, ObjectMapper.Map<List<Product>, List<ProductInListDto>>(data));
         }
 
+        [Authorize(remprojectPermissions.Product.Update)]
+
         private async Task SaveThumbnailImageAsync(string fileName, string base64)
         {
             Regex regex = new Regex(@"^[\w/\:.-]+;base64,");
@@ -166,6 +185,8 @@ namespace remproject.Admin.Catalog.Products
             byte[] bytes = Convert.FromBase64String(base64);
             await _fileContainer.SaveAsync(fileName, bytes, overrideExisting: true);
         }
+
+        [Authorize(remprojectPermissions.Product.Default)]
 
         public async Task<string> GetThumbnailImageAsync(string fileName)
         {
@@ -183,10 +204,13 @@ namespace remproject.Admin.Catalog.Products
             return result;
         }
 
+
         public async Task<string> GetSuggestNewCodeAsync()
         {
             return await _productCodeGenerator.GenerateAsync();
         }
+
+        [Authorize(remprojectPermissions.Product.Update)]
 
         public async Task<ProductAttributeValueDto> AddProductAttributeAsync(AddUpdateProductAttributeDto input)
         {
@@ -257,6 +281,8 @@ namespace remproject.Admin.Catalog.Products
             };
         }
 
+        [Authorize(remprojectPermissions.Product.Update)]
+
         public async Task RemoveProductAttributeAsync(Guid attributeId, Guid id)
         {
             var attribute = await _productAttributeRepository.GetAsync(x => x.Id == attributeId);
@@ -309,6 +335,8 @@ namespace remproject.Admin.Catalog.Products
             await UnitOfWorkManager.Current.SaveChangesAsync();
         }
 
+        [Authorize(remprojectPermissions.Product.Default)]
+
         public async Task<List<ProductAttributeValueDto>> GetListProductAttributeAllAsync(Guid productId)
         {
             var attributeQuery = await _productAttributeRepository.GetQueryableAsync();
@@ -360,6 +388,9 @@ namespace remproject.Admin.Catalog.Products
                            || x.VarcharId != null);
             return await AsyncExecuter.ToListAsync(query);
         }
+
+        [Authorize(remprojectPermissions.Product.Default)]
+
 
         public async Task<PagedResultDto<ProductAttributeValueDto>> GetListProductAttributesAsync(ProductAttributeListFilterDto input)
         {
@@ -418,6 +449,8 @@ namespace remproject.Admin.Catalog.Products
                 );
             return new PagedResultDto<ProductAttributeValueDto>(totalCount, data);
         }
+
+        [Authorize(remprojectPermissions.Product.Update)]
 
         public async Task<ProductAttributeValueDto> UpdateProductAttributeAsync(Guid id, AddUpdateProductAttributeDto input)
         {

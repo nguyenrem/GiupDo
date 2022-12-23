@@ -11,6 +11,18 @@ public class remprojectPermissionDefinitionProvider : PermissionDefinitionProvid
         //Catalog
         var catalogGroup = context.AddGroup(remprojectPermissions.CatalogGroupName, L("Permission:Catalog"));
 
+        //Manufacture
+        var manufacturerPermission = catalogGroup.AddPermission(remprojectPermissions.Manufacturer.Default, L("Permission:Catalog.Manufacturer"));
+        manufacturerPermission.AddChild(remprojectPermissions.Manufacturer.Create, L("Permission:Catalog.Manufacturer.Create"));
+        manufacturerPermission.AddChild(remprojectPermissions.Manufacturer.Update, L("Permission:Catalog.Manufacturer.Update"));
+        manufacturerPermission.AddChild(remprojectPermissions.Manufacturer.Delete, L("Permission:Catalog.Manufacturer.Delete"));
+
+        //Product Category
+        var productCategoryPermission = catalogGroup.AddPermission(remprojectPermissions.ProductCategory.Default, L("Permission:Catalog.ProductCategory"));
+        productCategoryPermission.AddChild(remprojectPermissions.ProductCategory.Create, L("Permission:Catalog.ProductCategory.Create"));
+        productCategoryPermission.AddChild(remprojectPermissions.ProductCategory.Update, L("Permission:Catalog.ProductCategory.Update"));
+        productCategoryPermission.AddChild(remprojectPermissions.ProductCategory.Delete, L("Permission:Catalog.ProductCategory.Delete"));
+
         //Add product
         var productPermission = catalogGroup.AddPermission(remprojectPermissions.Product.Default, L("Permission:Catalog.Product"));
         productPermission.AddChild(remprojectPermissions.Product.Create, L("Permission:Catalog.Product.Create"));

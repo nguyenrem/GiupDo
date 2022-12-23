@@ -1,16 +1,18 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using remproject.Admin.Catalog.ProductAttributes;
+using remproject.ProductAttributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using remproject.ProductAttributes;
+using remproject.Admin.Permissions;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
-namespace remproject.Admin.Catalog.ProductAttributes
+namespace remproject.Admin.ProductAttributes
 {
-    [Authorize]
+    [Authorize(remprojectPermissions.Attribute.Default, Policy = "AdminOnly")]
     public class ProductAttributesAppService : CrudAppService<
         ProductAttribute,
         ProductAttributeDto,
@@ -22,13 +24,21 @@ namespace remproject.Admin.Catalog.ProductAttributes
         public ProductAttributesAppService(IRepository<ProductAttribute, Guid> repository)
             : base(repository)
         {
+            GetPolicyName = remprojectPermissions.Attribute.Default;
+            GetListPolicyName = remprojectPermissions.Attribute.Default;
+            CreatePolicyName = remprojectPermissions.Attribute.Create;
+            UpdatePolicyName = remprojectPermissions.Attribute.Update;
+            DeletePolicyName = remprojectPermissions.Attribute.Delete;
         }
 
+        [Authorize(remprojectPermissions.Attribute.Delete)]
         public async Task DeleteMultipleAsync(IEnumerable<Guid> ids)
         {
             await Repository.DeleteManyAsync(ids);
             await UnitOfWorkManager.Current.SaveChangesAsync();
         }
+
+        [Authorize(remprojectPermissions.Attribute.Default)]
 
         public async Task<List<ProductAttributeInListDto>> GetListAllAsync()
         {
@@ -39,6 +49,8 @@ namespace remproject.Admin.Catalog.ProductAttributes
             return ObjectMapper.Map<List<ProductAttribute>, List<ProductAttributeInListDto>>(data);
 
         }
+
+        [Authorize(remprojectPermissions.Attribute.Default)]
 
         public async Task<PagedResultDto<ProductAttributeInListDto>> GetListFilterAsync(BaseListFilterDto input)
         {

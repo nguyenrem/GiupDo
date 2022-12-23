@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
+using remproject.Admin.System.Roles;
 using remproject.Roles;
 using System;
 using System.Collections.Generic;
@@ -15,8 +16,10 @@ using Volo.Abp.Identity;
 using Volo.Abp.PermissionManagement;
 using Volo.Abp.SimpleStateChecking;
 
-namespace remproject.Admin.System.Roles
+namespace remproject.Admin.Roles
 {
+    [Authorize(IdentityPermissions.Roles.Default, Policy = "AdminOnly")]
+
     public class RolesAppService : CrudAppService<
         IdentityRole,
         RoleDto,
@@ -41,13 +44,23 @@ namespace remproject.Admin.System.Roles
             PermissionManager = permissionManager;
             PermissionDefinitionManager = permissionDefinitionManager;
             SimpleStateCheckerManager = simpleStateCheckerManager;
+
+            GetPolicyName = IdentityPermissions.Roles.Default;
+            GetListPolicyName = IdentityPermissions.Roles.Default;
+            CreatePolicyName = IdentityPermissions.Roles.Create;
+            UpdatePolicyName = IdentityPermissions.Roles.Update;
+            DeletePolicyName = IdentityPermissions.Roles.Delete;
         }
+
+        [Authorize(IdentityPermissions.Roles.Delete)]
 
         public async Task DeleteMultipleAsync(IEnumerable<Guid> ids)
         {
             await Repository.DeleteManyAsync(ids);
             await UnitOfWorkManager.Current.SaveChangesAsync();
         }
+
+        [Authorize(IdentityPermissions.Roles.Default)]
 
         public async Task<List<RoleInListDto>> GetListAllAsync()
         {
@@ -57,6 +70,8 @@ namespace remproject.Admin.System.Roles
             return ObjectMapper.Map<List<IdentityRole>, List<RoleInListDto>>(data);
 
         }
+
+        [Authorize(IdentityPermissions.Roles.Default)]
 
         public async Task<PagedResultDto<RoleInListDto>> GetListFilterAsync(BaseListFilterDto input)
         {
@@ -68,6 +83,8 @@ namespace remproject.Admin.System.Roles
 
             return new PagedResultDto<RoleInListDto>(totalCount, ObjectMapper.Map<List<IdentityRole>, List<RoleInListDto>>(data));
         }
+
+        [Authorize(IdentityPermissions.Roles.Create)]
 
         public async override Task<RoleDto> CreateAsync(CreateUpdateRoleDto input)
         {
@@ -84,6 +101,8 @@ namespace remproject.Admin.System.Roles
             await UnitOfWorkManager.Current.SaveChangesAsync();
             return ObjectMapper.Map<IdentityRole, RoleDto>(data);
         }
+
+        [Authorize(IdentityPermissions.Roles.Update)]
 
         public async override Task<RoleDto> UpdateAsync(Guid id, CreateUpdateRoleDto input)
         {
@@ -104,6 +123,8 @@ namespace remproject.Admin.System.Roles
             await UnitOfWorkManager.Current.SaveChangesAsync();
             return ObjectMapper.Map<IdentityRole, RoleDto>(data);
         }
+
+        [Authorize(IdentityPermissions.Roles.Default)]
 
         public async Task<GetPermissionListResultDto> GetPermissionsAsync(string providerName, string providerKey)
         {
@@ -190,6 +211,8 @@ namespace remproject.Admin.System.Roles
                 Permissions = new List<PermissionGrantInfoDto>(),
             };
         }
+
+        [Authorize(IdentityPermissions.Roles.Update)]
 
         public virtual async Task UpdatePermissionsAsync(string providerName, string providerKey, UpdatePermissionsDto input)
         {
